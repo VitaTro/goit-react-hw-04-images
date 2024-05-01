@@ -11,7 +11,7 @@ import SearchBar from './SearchBar/SearchBar';
 const App = () => {
   const [images, setImages] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
+  // const [error, setError] = useState(null);
   const [query, setQuery] = useState('');
   const [page, setPage] = useState(1);
   const [lastPage, setLastPage] = useState(1);
@@ -26,11 +26,10 @@ const App = () => {
   // запит
   const updateQuery = ({ query }) => {
     setQuery(query);
-    error(null);
   };
 
   // приймає з бекенду картинки за пошуком
-  const mapImages = ({ fetchedImages }) => {
+  const mapImages = fetchedImages => {
     const mappedImages = fetchedImages.map(image => ({
       id: image.id,
       small: image.webformatURL, // якщо змінити тут f на F, то картинки зникають. замість них з'являється "бита"
@@ -115,6 +114,8 @@ const App = () => {
   // }, [page]);
 
   useEffect(() => {
+    if (!query) return;
+
     const fetchData = async () => {
       setLoading(true);
       try {
@@ -126,7 +127,7 @@ const App = () => {
         setLastPage(lastPage);
         window.scrollTo({ top: 0, behavior: 'smooth' });
       } catch (error) {
-        setError(error);
+        console.log(error);
       } finally {
         setLoading(false);
       }
@@ -144,7 +145,7 @@ const App = () => {
           const mappedImages = mapImages(fetchedData.images);
           setImages(prevImages => [...prevImages, ...mappedImages]);
         } catch (error) {
-          setError(error);
+          console.log(error);
         } finally {
           setLoading(false);
         }
