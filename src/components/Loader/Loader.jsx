@@ -1,6 +1,6 @@
 import { useMediaQuery } from 'react-responsive';
 import styled, { keyframes } from 'styled-components';
-import css from './WifiLoader.module.css';
+import css from './Loader.module.css';
 
 const AnimCircleOuter = keyframes`
     0% {
@@ -174,7 +174,7 @@ const StyledText = styled.div`
   }
 `;
 
-const WifiLoader = ({
+const Loader = ({
   className = `wifiloader`,
   text = `Loading...`,
   background = `transparent`,
@@ -297,4 +297,4 @@ const WifiLoader = ({
   );
 };
 
-export default WifiLoader;
+export default Loader;
